@@ -29,7 +29,6 @@ TicModel.prototype.nextTurn = function nextTurn() {
     this.marker = " O ";
     this.turn = 1;
   }
-  //alert("next turn marker: " + this.marker);
 };
 
 /* VIEW
@@ -65,13 +64,6 @@ TicView.prototype.render = function render(ticModel) {
   htmlString = htmlString + "</table>";
 
   this.element.innerHTML = htmlString;
-
-  let ticCellButtons = this.element.querySelectorAll("#ticCell");
-  for (var i = 0; i < ticCellButtons.length; i++) {
-    ticCellButtons[i].addEventListener("click", function() {
-      this.updateView(i);
-    });
-  }
 };
 
 /* CONTROLLER
@@ -90,7 +82,6 @@ TicController.prototype.initialize = function initialize() {
 };
 
 TicController.prototype.updateView = function updateView(index) {
-  alert("asd");
   this.ticModel.nextTurn();
   this.ticModel.updateArray(index);
   this.ticView.render(this.ticModel);
@@ -107,8 +98,19 @@ var ticModel = new TicModel();
 var ticView = new TicView(targetElement);
 var controller = new TicController(ticView, ticModel);
 
+let ticCellButtons = targetElement.querySelectorAll("#ticCell");
+
 /* EXECUTION
  */
 
 controller.initialize();
+
+document.addEventListener("click", function(event) {
+  for (let i = 0; i < ticCellButtons.length; i++) {
+    if (event.target === ticCellButtons[i]) {
+      console.log(event.target);
+    }
+  }
+});
+
 //controller.ticView.updateView(7);
