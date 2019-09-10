@@ -37,19 +37,33 @@ TicModel.prototype.nextTurn = function nextTurn() {
 var TicView = function TicView(element) {
   this.element = element;
   this.updateView = null;
+  this.ticCellButtons = null;
+};
+
+TicView.prototype.initListener = function initListener() {
+  this.ticCellButtons = targetElement.querySelectorAll("button");
+  document.addEventListener("click", function(event) {
+    for (let i = 0; i < ticView.ticCellButtons.length; i++) {
+      //console.log(event.target);
+      if (event.target.isSameNode(ticView.ticCellButtons[i])) {
+        console.log("Wau");
+      }
+    }
+  });
+  //alert("Listening " + this.ticCellButtons.length + " ticCells");
 };
 
 TicView.prototype.render = function render(ticModel) {
   let modelRows = ticModel.rows;
   let modelColumns = ticModel.columns;
-  let modelMarker = ticModel.marker;
   let modelArray = ticModel.ticArray;
   let htmlString = "";
   htmlString = htmlString + "<table>";
+
   for (let i = 0; i < modelRows; i++) {
     htmlString = htmlString + "<tr>";
     for (let j = 0; j < modelColumns; j++) {
-      htmlString = htmlString + '<td><button id="ticCell">';
+      htmlString = htmlString + '<td><button id="ticCell' + i + j + '">';
       if (modelArray[i][j] === null) {
         htmlString = htmlString + " - ";
       } else if (modelArray[i][j] === 1) {
@@ -78,7 +92,9 @@ var TicController = function TicController(ticView, ticModel) {
 TicController.prototype.initialize = function initialize() {
   this.ticView.updateView = this.updateView.bind(this);
   this.ticView.render(this.ticModel);
+  this.ticView.initListener();
   this.ticModel.nextTurn();
+  //alert(this.ticView.ticCellButtons.length);
 };
 
 TicController.prototype.updateView = function updateView(index) {
@@ -98,19 +114,7 @@ var ticModel = new TicModel();
 var ticView = new TicView(targetElement);
 var controller = new TicController(ticView, ticModel);
 
-let ticCellButtons = targetElement.querySelectorAll("#ticCell");
-
 /* EXECUTION
  */
 
 controller.initialize();
-
-document.addEventListener("click", function(event) {
-  for (let i = 0; i < ticCellButtons.length; i++) {
-    if (event.target === ticCellButtons[i]) {
-      console.log(event.target);
-    }
-  }
-});
-
-//controller.ticView.updateView(7);
