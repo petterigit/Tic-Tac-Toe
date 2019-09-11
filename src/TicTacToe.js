@@ -37,10 +37,10 @@ TicModel.prototype.checkWinCon = function checkWinCon() {
       markerStringVert = markerStringVert + this.ticArray[i][j];
     }
     if (markerStringVert === " X  X  X  X  X ") {
-      alert("X voitti !11!1!!1");
+      alert("Player 1 won!");
       return true;
     } else if (markerStringVert === " O  O  O  O  O ") {
-      alert("O voitti !1!1!!!!");
+      alert("Player 2 won!");
       return true;
     }
   }
@@ -50,10 +50,10 @@ TicModel.prototype.checkWinCon = function checkWinCon() {
       markerStringHori = markerStringHori + this.ticArray[i][j];
     }
     if (markerStringHori === " X  X  X  X  X ") {
-      alert("X voitti !11!1!!1");
+      alert("Player 1 won!");
       return true;
     } else if (markerStringHori === " O  O  O  O  O ") {
-      alert("O voitti !1!1!!!!");
+      alert("Player 2 won!");
       return true;
     }
   }
@@ -63,20 +63,20 @@ TicModel.prototype.checkWinCon = function checkWinCon() {
     for (let j = 0, k = i; k < this.columns; j++, k++) {
       markerStringDiag = markerStringDiag + this.ticArray[j][k];
       if (markerStringDiag === " X  X  X  X  X ") {
-        alert("X voitti !11!1!!1");
+        alert("Player 1 won!");
         return true;
       } else if (markerStringDiag === " O  O  O  O  O ") {
-        alert("O voitti !1!1!!!!");
+        alert("Player 2 won!");
         return true;
       }
     }
     for (let j = 0, k = i; k >= 0; j++, k--) {
       markerStringDiag = markerStringDiag + this.ticArray[j][k];
       if (markerStringDiag === " X  X  X  X  X ") {
-        alert("X voitti !11!1!!1");
+        alert("Player 1 won!");
         return true;
       } else if (markerStringDiag === " O  O  O  O  O ") {
-        alert("O voitti !1!1!!!!");
+        alert("Player 2 won!");
         return true;
       }
     }
