@@ -194,9 +194,9 @@ class TicController {
     if (this.ticView.move()) {
     }
     if (this.ticModel.checkWinCon()) {
-      alert("Starting a new game");
-      this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
-      this.ticView.render(this.ticModel);
+      //alert("Starting a new game");
+      //this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
+      //this.ticView.render(this.ticModel);
     }
   }
   initListener() {
