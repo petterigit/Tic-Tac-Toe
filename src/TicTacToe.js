@@ -187,7 +187,9 @@ class TicController {
 
   updateView(renderAll) {
     this.ticModel.nextTurn();
-    this.ticModel.updateArray(this.ticView.lastButtonIndex);
+    if (renderAll !== false) {
+      this.ticModel.updateArray(this.ticView.lastButtonIndex);
+    }
     this.ticView.render(this.ticModel, renderAll);
     if (this.ticView.move()) {
     }
