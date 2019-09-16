@@ -1,229 +1,226 @@
+import "./styles.css";
 /* MODEL
   Handles background functionality
 */
-var TicModel = function TicModel() {
-  this.marker = " - ";
-  this.rows = 5;
-  this.columns = 5;
-  this.turn = 0;
-  this.ticArray = [...Array(5)].map(e => Array(5).fill(null));
-};
-
-TicModel.prototype.updateArray = function updateArray(index) {
-  let row = Math.floor(index / 5);
-  //console.log("Row: " + row);
-  let column = index % 5;
-  //console.log("Column: " + column);
-  this.ticArray[row][column] = this.marker;
-  //console.log(this.ticArray);
-};
-
-TicModel.prototype.nextTurn = function nextTurn() {
-  if (this.turn === 1) {
-    this.marker = " X ";
+class TicModel {
+  constructor() {
+    this.marker = " - ";
+    this.rows = 5;
+    this.columns = 5;
     this.turn = 0;
-  } else if (this.turn === 0) {
-    this.marker = " O ";
-    this.turn = 1;
+    this.ticArray = [...Array(5)].map(e => Array(5).fill(null));
   }
-};
-
-TicModel.prototype.checkWinCon = function checkWinCon() {
-  let markerStringVert, markerStringHori, markerStringDiag;
-
-  for (let i = 0; i < this.rows; i++) {
-    markerStringVert = "";
-    for (let j = 0; j < this.columns; j++) {
-      markerStringVert = markerStringVert + this.ticArray[i][j];
-    }
-    if (markerStringVert === " X  X  X  X  X ") {
-      alert("Player 1 won!");
-      return true;
-    } else if (markerStringVert === " O  O  O  O  O ") {
-      alert("Player 2 won!");
-      return true;
+  updateArray(index) {
+    let row = Math.floor(index / 5);
+    let column = index % 5;
+    this.ticArray[row][column] = this.marker;
+  }
+  nextTurn() {
+    if (this.turn === 1) {
+      this.marker = " X ";
+      this.turn = 0;
+    } else if (this.turn === 0) {
+      this.marker = " O ";
+      this.turn = 1;
     }
   }
-  for (let j = 0; j < this.rows; j++) {
-    markerStringHori = "";
+  checkWinCon() {
+    let markerStringVert, markerStringHori, markerStringDiag;
+    for (let i = 0; i < this.rows; i++) {
+      markerStringVert = "";
+      for (let j = 0; j < this.columns; j++) {
+        markerStringVert = markerStringVert + this.ticArray[i][j];
+      }
+      if (markerStringVert === " X  X  X  X  X ") {
+        alert("Player 1 won!");
+        return true;
+      } else if (markerStringVert === " O  O  O  O  O ") {
+        alert("Player 2 won!");
+        return true;
+      }
+    }
+    for (let j = 0; j < this.rows; j++) {
+      markerStringHori = "";
+      for (let i = 0; i < this.columns; i++) {
+        markerStringHori = markerStringHori + this.ticArray[i][j];
+      }
+      if (markerStringHori === " X  X  X  X  X ") {
+        alert("Player 1 won!");
+        return true;
+      } else if (markerStringHori === " O  O  O  O  O ") {
+        alert("Player 2 won!");
+        return true;
+      }
+    }
     for (let i = 0; i < this.columns; i++) {
-      markerStringHori = markerStringHori + this.ticArray[i][j];
-    }
-    if (markerStringHori === " X  X  X  X  X ") {
-      alert("Player 1 won!");
-      return true;
-    } else if (markerStringHori === " O  O  O  O  O ") {
-      alert("Player 2 won!");
-      return true;
-    }
-  }
-
-  for (let i = 0; i < this.columns; i++) {
-    markerStringDiag = "";
-    for (let j = 0, k = i; k < this.columns; j++, k++) {
-      markerStringDiag = markerStringDiag + this.ticArray[j][k];
-      if (markerStringDiag === " X  X  X  X  X ") {
-        alert("Player 1 won!");
-        return true;
-      } else if (markerStringDiag === " O  O  O  O  O ") {
-        alert("Player 2 won!");
-        return true;
+      markerStringDiag = "";
+      for (let j = 0, k = i; k < this.columns; j++, k++) {
+        markerStringDiag = markerStringDiag + this.ticArray[j][k];
+        if (markerStringDiag === " X  X  X  X  X ") {
+          alert("Player 1 won!");
+          return true;
+        } else if (markerStringDiag === " O  O  O  O  O ") {
+          alert("Player 2 won!");
+          return true;
+        }
       }
-    }
-    for (let j = 0, k = i; k >= 0; j++, k--) {
-      markerStringDiag = markerStringDiag + this.ticArray[j][k];
-      if (markerStringDiag === " X  X  X  X  X ") {
-        alert("Player 1 won!");
-        return true;
-      } else if (markerStringDiag === " O  O  O  O  O ") {
-        alert("Player 2 won!");
-        return true;
+      for (let j = 0, k = i; k >= 0; j++, k--) {
+        markerStringDiag = markerStringDiag + this.ticArray[j][k];
+        if (markerStringDiag === " X  X  X  X  X ") {
+          alert("Player 1 won!");
+          return true;
+        } else if (markerStringDiag === " O  O  O  O  O ") {
+          alert("Player 2 won!");
+          return true;
+        }
       }
     }
   }
-};
+}
 
 /* VIEW
   Displays the functionality of the program
 */
-var TicView = function TicView(element) {
-  this.element = element;
-  this.elementType = "canvas";
-  this.updateView = null;
-  this.ticCellButtons = new Array(25);
-  this.lastButtonIndex = 0;
-  this.initListener = null;
-};
+class TicView {
+  constructor(boardElement, barElement) {
+    this.boardElement = boardElement;
+    this.progressElement = barElement;
+    this.elementType = "td";
+    this.updateView = null;
+    this.ticCellButtons = new Array(25);
+    this.lastButtonIndex = 0;
+    this.initListener = null;
 
-TicView.prototype.initListener = function initListener() {
-  //alert("Listening " + this.ticCellButtons.length + " ticCells");
-};
-
-TicView.prototype.render = function render(ticModel) {
-  let modelRows = ticModel.rows;
-  let modelColumns = ticModel.columns;
-  let modelArray = ticModel.ticArray;
-  let htmlString = "";
-  let canvasHeight = 80,
-    canvasWidth = 80;
-  htmlString = htmlString + "<table>";
-
-  for (let i = 0; i < modelRows; i++) {
-    htmlString = htmlString + "<tr>";
-    for (let j = 0; j < modelColumns; j++) {
-      htmlString =
-        htmlString +
-        '<td><canvas width="' +
-        canvasWidth +
-        '" height="' +
-        canvasHeight +
-        '" style="border:1px solid #000000;">';
-      /*if (modelArray[i][j] === null) {
-        htmlString = htmlString + " - ";
-      } else if (modelArray[i][j] === " X ") {
-        htmlString = htmlString + " X ";
-      } else if (modelArray[i][j] === " O ") {
-        htmlString = htmlString + " O ";
-      }
-      */
-      htmlString = htmlString + '"></canvas></td>';
-    }
-    htmlString = htmlString + "</tr>";
+    this.barWidth = 1;
+    this.barId = null;
+    this.barInterval = null;
   }
-  htmlString = htmlString + "</table>";
+  initListener() {
+    //alert("Listening " + this.ticCellButtons.length + " ticCells");
+  }
+  render(ticModel, renderAll) {
+    let modelRows = ticModel.rows;
+    let modelColumns = ticModel.columns;
+    let modelArray = ticModel.ticArray;
+    let modelTurn = ticModel.turn;
+    let htmlString = "";
 
-  this.element.innerHTML = htmlString;
+    if (renderAll === undefined) {
+      renderAll = true;
+    }
 
-  this.ticCellButtons = this.element.querySelectorAll(this.elementType);
+    if (renderAll) {
+      htmlString = htmlString + '<h1 id="headerElement"> Next in line: ';
+      if (modelTurn === 1) {
+        htmlString = htmlString + "X </h1>";
+      } else if (modelTurn === 0) {
+        htmlString = htmlString + "O </h1>";
+      }
+      htmlString = htmlString + "<table>";
+      for (let i = 0; i < modelRows; i++) {
+        htmlString = htmlString + "<tr>";
+        for (let j = 0; j < modelColumns; j++) {
+          htmlString = htmlString + "<td>";
+          if (modelArray[i][j] === null) {
+            htmlString = htmlString + " - ";
+          } else if (modelArray[i][j] === " X ") {
+            htmlString = htmlString + " X ";
+          } else if (modelArray[i][j] === " O ") {
+            htmlString = htmlString + " O ";
+          }
+          htmlString = htmlString + "</td>";
+        }
+        htmlString = htmlString + "</tr>";
+      }
+      htmlString = htmlString + "</table>";
+      this.boardElement.innerHTML = htmlString;
+    } else {
+      let headerElement = document.getElementById("headerElement");
+      htmlString = htmlString + '<h1 id="headerElement"> Next in line: ';
+      if (modelTurn === 1) {
+        htmlString = htmlString + "X </h1>";
+      } else if (modelTurn === 0) {
+        htmlString = htmlString + "O </h1>";
+      }
+      headerElement.innerHTML = htmlString;
+    }
+    this.ticCellButtons = this.boardElement.querySelectorAll(this.elementType);
+    return true;
+  }
 
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      if (modelArray[i][j] === null) {
-        let thisCanvas = this.ticCellButtons[5 * i + j];
-        let ctx = thisCanvas.getContext("2d");
-        ctx.font = "30px Comic Sans MS";
-        ctx.textAlign = "center";
-        ctx.fillText("-", canvasWidth / 2, canvasHeight / 2 + 15);
-      } else if (modelArray[i][j] === " X ") {
-        let thisCanvas = this.ticCellButtons[5 * i + j];
-        let ctx = thisCanvas.getContext("2d");
-        ctx.font = "30px Comic Sans MS";
-        ctx.textAlign = "center";
-        ctx.fillText("X", canvasWidth / 2, canvasHeight / 2 + 15);
-      } else if (modelArray[i][j] === " O ") {
-        let thisCanvas = this.ticCellButtons[5 * i + j];
-        let ctx = thisCanvas.getContext("2d");
-        ctx.font = "30px Comic Sans MS";
-        ctx.textAlign = "center";
-        ctx.fillText("O", canvasWidth / 2, canvasHeight / 2 + 15);
+  move() {
+    clearInterval(this.barInterval);
+    let elem = document.getElementById("progressBar");
+    let width = 0;
+    this.barInterval = setInterval(frame, 100);
+    function frame() {
+      if (width >= 100) {
+        controller.updateView(false);
+        return true;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        elem.innerHTML = 10 - Math.floor(width / 10) + " Seconds remaining";
       }
     }
   }
-};
+}
 
 /* CONTROLLER
    Handles interaction between model and view
 */
-
-var TicController = function TicController(ticView, ticModel) {
-  this.ticView = ticView;
-  this.ticModel = ticModel;
-  this.ticController = this;
-};
-
-TicController.prototype.initialize = function initialize() {
-  this.ticView.updateView = this.updateView.bind(this);
-  this.ticView.initListener = this.initListener.bind(this);
-  this.ticView.render(this.ticModel);
-  this.initListener();
-  this.ticModel.nextTurn();
-};
-
-TicController.prototype.checkWinCon = function checkWinCon() {};
-
-TicController.prototype.updateView = function updateView() {
-  this.ticModel.nextTurn();
-  //console.log("Woah: " + this.ticView.lastButtonIndex);
-  this.ticModel.updateArray(this.ticView.lastButtonIndex);
-  this.ticView.render(this.ticModel);
-  if (this.ticModel.checkWinCon()) {
-    alert("Starting a new game");
-    this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
-    this.ticView.render(this.ticModel);
+class TicController {
+  constructor(ticView, ticModel) {
+    this.ticView = ticView;
+    this.ticModel = ticModel;
+    this.ticController = this;
   }
-};
+  initialize() {
+    this.ticView.updateView = this.updateView.bind(this);
+    this.ticView.initListener = this.initListener.bind(this);
+    this.ticModel.nextTurn();
+    this.ticView.render(this.ticModel);
+    this.initListener();
+    //this.ticView.progressBar();
+  }
+  checkWinCon() {}
 
-TicController.prototype.initListener = function initListener() {
-  this.ticView.ticCellButtons = targetElement.querySelectorAll(
-    this.ticView.elementType
-  );
-  document.addEventListener("click", function(event) {
-    //console.log(controller.ticView.ticCellButtons.length);
-    for (let i = 0; i < controller.ticView.ticCellButtons.length; i++) {
-      //console.log("Round: " + i);
-      /*console.log(
-        event.target.innerHTML +
-          " =?= " +
-          controller.ticView.ticCellButtons[i].innerHTML
-      ); */
-      if (event.target.isSameNode(controller.ticView.ticCellButtons[i])) {
-        controller.ticView.lastButtonIndex = i;
-        console.log(i + " to be updated");
-        controller.updateView();
-        break;
-      }
+  updateView(renderAll) {
+    this.ticModel.nextTurn();
+    this.ticModel.updateArray(this.ticView.lastButtonIndex);
+    this.ticView.render(this.ticModel, renderAll);
+    if (this.ticView.move()) {
     }
-  });
-};
-/* INITIALIZE
- */
+    if (this.ticModel.checkWinCon()) {
+      alert("Starting a new game");
+      this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
+      this.ticView.render(this.ticModel);
+    }
+  }
+  initListener() {
+    this.ticView.ticCellButtons = this.ticView.boardElement.querySelectorAll(
+      this.ticView.elementType
+    );
+    document.addEventListener("click", function(event) {
+      for (let i = 0; i < controller.ticView.ticCellButtons.length; i++) {
+        if (event.target.isSameNode(controller.ticView.ticCellButtons[i])) {
+          controller.ticView.lastButtonIndex = i;
+          console.log(i + " to be updated");
+          controller.updateView();
+          break;
+        }
+      }
+    });
+  }
+}
 
 /* Elements */
-var targetElement = document.getElementById("board");
+var boardElement = document.getElementById("board");
+var barElement = document.getElementById("progressBar");
 
 /* M V C */
 var ticModel = new TicModel();
-var ticView = new TicView(targetElement);
+var ticView = new TicView(boardElement, barElement);
 var controller = new TicController(ticView, ticModel);
 
 /* EXECUTION
