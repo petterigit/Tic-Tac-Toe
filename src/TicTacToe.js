@@ -4,7 +4,7 @@ import "./styles.css";
 */
 class TicModel {
   constructor() {
-    this.marker = " - ";
+    this.marker = "";
     this.rows = 5;
     this.columns = 5;
     this.turn = 0;
@@ -122,7 +122,7 @@ class TicView {
         for (let j = 0; j < modelColumns; j++) {
           htmlString = htmlString + "<td>";
           if (modelArray[i][j] === null) {
-            htmlString = htmlString + " - ";
+            htmlString = htmlString + "";
           } else if (modelArray[i][j] === " X ") {
             htmlString = htmlString + " X ";
           } else if (modelArray[i][j] === " O ") {
