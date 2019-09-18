@@ -34,8 +34,10 @@ class TicModel {
       }
       if (markerStringVert === " X  X  X  X  X ") {
         alert("Player 1 won!");
+        console.log("win con 1");
         return true;
       } else if (markerStringVert === " O  O  O  O  O ") {
+        console.log("win con 1");
         alert("Player 2 won!");
         return true;
       }
@@ -46,9 +48,11 @@ class TicModel {
         markerStringHori = markerStringHori + this.ticArray[i][j];
       }
       if (markerStringHori === " X  X  X  X  X ") {
+        console.log("win con 2");
         alert("Player 1 won!");
         return true;
       } else if (markerStringHori === " O  O  O  O  O ") {
+        console.log("win con 2");
         alert("Player 2 won!");
         return true;
       }
@@ -58,19 +62,24 @@ class TicModel {
       for (let j = 0, k = i; k < this.columns; j++, k++) {
         markerStringDiag = markerStringDiag + this.ticArray[j][k];
         if (markerStringDiag === " X  X  X  X  X ") {
+          console.log("win con 3");
           alert("Player 1 won!");
           return true;
         } else if (markerStringDiag === " O  O  O  O  O ") {
+          console.log("win con 3");
           alert("Player 2 won!");
           return true;
         }
       }
+      markerStringDiag = "";
       for (let j = 0, k = i; k >= 0; j++, k--) {
         markerStringDiag = markerStringDiag + this.ticArray[j][k];
         if (markerStringDiag === " X  X  X  X  X ") {
+          console.log("win con 3");
           alert("Player 1 won!");
           return true;
         } else if (markerStringDiag === " O  O  O  O  O ") {
+          console.log("win con 3");
           alert("Player 2 won!");
           return true;
         }
