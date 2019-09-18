@@ -113,9 +113,9 @@ class TicView {
     if (renderAll) {
       htmlString = htmlString + '<h1 id="headerElement"> Next in line: ';
       if (modelTurn === 1) {
-        htmlString = htmlString + "X </h1>";
+        htmlString = htmlString + "x </h1>";
       } else if (modelTurn === 0) {
-        htmlString = htmlString + "O </h1>";
+        htmlString = htmlString + "o </h1>";
       }
       htmlString = htmlString + "<table>";
       for (let i = 0; i < modelRows; i++) {
@@ -125,9 +125,9 @@ class TicView {
           if (modelArray[i][j] === null) {
             htmlString = htmlString + "";
           } else if (modelArray[i][j] === " X ") {
-            htmlString = htmlString + " X ";
+            htmlString = htmlString + " x ";
           } else if (modelArray[i][j] === " O ") {
-            htmlString = htmlString + " O ";
+            htmlString = htmlString + " o ";
           }
           htmlString = htmlString + "</td>";
         }
@@ -139,9 +139,9 @@ class TicView {
       let headerElement = document.getElementById("headerElement");
       htmlString = htmlString + '<h1 id="headerElement"> Next in line: ';
       if (modelTurn === 1) {
-        htmlString = htmlString + "X </h1>";
+        htmlString = htmlString + "x </h1>";
       } else if (modelTurn === 0) {
-        htmlString = htmlString + "O </h1>";
+        htmlString = htmlString + "o </h1>";
       }
       headerElement.innerHTML = htmlString;
     }
