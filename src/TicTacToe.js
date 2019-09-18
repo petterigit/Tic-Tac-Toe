@@ -24,8 +24,19 @@ class TicModel {
       this.turn = 1;
     }
   }
-  checkWinCon() {
+  async checkWinCon() {
+    // wait for the promise to resolve
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve(true), 100); // resolve
+    });
+
+    // wait for the promise to resolve
+    let result = await promise;
+
+    // console log the result (true)
+    console.log(result);
     let markerStringVert, markerStringHori, markerStringDiag;
+
     for (let i = 0; i < this.rows; i++) {
       markerStringVert = "";
       for (let j = 0; j < this.columns; j++) {
@@ -181,7 +192,6 @@ class TicController {
     this.ticModel.nextTurn();
     this.ticView.render(this.ticModel);
     this.initListener();
-    //this.ticView.progressBar();
   }
   checkWinCon() {}
 
@@ -191,13 +201,11 @@ class TicController {
       this.ticModel.updateArray(this.ticView.lastButtonIndex);
     }
     this.ticView.render(this.ticModel, renderAll);
-    if (this.ticView.move()) {
-    }
-    if (this.ticModel.checkWinCon()) {
-      //alert("Starting a new game");
-      //this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
-      //this.ticView.render(this.ticModel);
-    }
+    this.ticView.move();
+    this.ticModel.checkWinCon();
+    //alert("Starting a new game");
+    //this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
+    //this.ticView.render(this.ticModel);
   }
   initListener() {
     this.ticView.ticCellButtons = this.ticView.boardElement.querySelectorAll(
