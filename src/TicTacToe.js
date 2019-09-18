@@ -146,10 +146,10 @@ class TicView {
       headerElement.innerHTML = htmlString;
     }
     this.ticCellButtons = this.boardElement.querySelectorAll(this.elementType);
-    
-    setTimeout(function () {
+
+    setTimeout(function() {
       controller.ticModel.checkWinCon();
-    }, 10);
+    }, 30);
     //controller.ticModel.checkWinCon();
   }
 
