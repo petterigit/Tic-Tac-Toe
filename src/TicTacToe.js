@@ -130,12 +130,15 @@ class TicView {
       for (let i = 0; i < modelRows; i++) {
         htmlString = htmlString + "<tr>";
         for (let j = 0; j < modelColumns; j++) {
-          htmlString = htmlString + "<td>";
+          //htmlString = htmlString + "<td>";
           if (modelArray[i][j] === null) {
+            htmlString = htmlString + "<td>";
             htmlString = htmlString + "";
           } else if (modelArray[i][j] === " X ") {
+            htmlString = htmlString + '<td id="x">';
             htmlString = htmlString + " x ";
           } else if (modelArray[i][j] === " O ") {
+            htmlString = htmlString + '<td id="o">';
             htmlString = htmlString + " o ";
           }
           htmlString = htmlString + "</td>";
@@ -221,7 +224,6 @@ class TicController {
             controller.updateView();
             break;
           }
-          
         }
       }
     });
