@@ -206,10 +206,13 @@ class TicController {
     document.addEventListener("click", function(event) {
       for (let i = 0; i < controller.ticView.ticCellButtons.length; i++) {
         if (event.target.isSameNode(controller.ticView.ticCellButtons[i])) {
-          controller.ticView.lastButtonIndex = i;
-          console.log(i + " to be updated");
-          controller.updateView();
-          break;
+          if (controller.ticView.ticCellButtons[i].innerHTML === "") {
+            controller.ticView.lastButtonIndex = i;
+            //console.log(i + " to be updated");
+            controller.updateView();
+            break;
+          }
+          
         }
       }
     });
