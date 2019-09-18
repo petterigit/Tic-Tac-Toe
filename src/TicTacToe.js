@@ -24,17 +24,7 @@ class TicModel {
       this.turn = 1;
     }
   }
-  async checkWinCon() {
-    // wait for the promise to resolve
-    let promise = new Promise((resolve, reject) => {
-      setTimeout(() => resolve(true), 100); // resolve
-    });
-
-    // wait for the promise to resolve
-    let result = await promise;
-
-    // console log the result (true)
-    console.log(result);
+  checkWinCon() {
     let markerStringVert, markerStringHori, markerStringDiag;
 
     for (let i = 0; i < this.rows; i++) {
@@ -156,7 +146,11 @@ class TicView {
       headerElement.innerHTML = htmlString;
     }
     this.ticCellButtons = this.boardElement.querySelectorAll(this.elementType);
-    return true;
+    
+    setTimeout(function () {
+      controller.ticModel.checkWinCon();
+    }, 10);
+    //controller.ticModel.checkWinCon();
   }
 
   move() {
@@ -193,8 +187,6 @@ class TicController {
     this.ticView.render(this.ticModel);
     this.initListener();
   }
-  checkWinCon() {}
-
   updateView(renderAll) {
     this.ticModel.nextTurn();
     if (renderAll !== false) {
@@ -202,7 +194,7 @@ class TicController {
     }
     this.ticView.render(this.ticModel, renderAll);
     this.ticView.move();
-    this.ticModel.checkWinCon();
+    //this.ticModel.checkWinCon();
     //alert("Starting a new game");
     //this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
     //this.ticView.render(this.ticModel);
