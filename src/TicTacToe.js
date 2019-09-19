@@ -95,7 +95,7 @@ class TicView {
   constructor(boardElement, barElement) {
     this.boardElement = boardElement;
     this.progressElement = barElement;
-    this.elementType = "td";
+    this.elementType = "[class=col s2]";
     this.updateView = null;
     this.ticCellButtons = new Array(25);
     this.lastButtonIndex = 0;
@@ -105,9 +105,7 @@ class TicView {
     this.barId = null;
     this.barInterval = null;
   }
-  initListener() {
-    //alert("Listening " + this.ticCellButtons.length + " ticCells");
-  }
+
   render(ticModel, renderAll) {
     let modelRows = ticModel.rows;
     let modelColumns = ticModel.columns;
@@ -126,26 +124,26 @@ class TicView {
       } else if (modelTurn === 0) {
         htmlString = htmlString + "o </h1>";
       }
-      htmlString = htmlString + "<table>";
+      htmlString = htmlString + '<div class="container"><br>';
       for (let i = 0; i < modelRows; i++) {
-        htmlString = htmlString + "<tr>";
+        htmlString = htmlString + '<div class="row"><br>';
         for (let j = 0; j < modelColumns; j++) {
           //htmlString = htmlString + "<td>";
           if (modelArray[i][j] === null) {
-            htmlString = htmlString + "<td>";
-            htmlString = htmlString + "";
+            htmlString = htmlString + '<div class="col s2" id="emptyCell">';
+            htmlString = htmlString + " - ";
           } else if (modelArray[i][j] === " X ") {
-            htmlString = htmlString + '<td id="x">';
+            htmlString = htmlString + '<div class="col s2" id="x">';
             htmlString = htmlString + " x ";
           } else if (modelArray[i][j] === " O ") {
-            htmlString = htmlString + '<td id="o">';
+            htmlString = htmlString + '<div class="col s2" id="o">';
             htmlString = htmlString + " o ";
           }
-          htmlString = htmlString + "</td>";
+          htmlString = htmlString + "</div>";
         }
-        htmlString = htmlString + "</tr>";
+        htmlString = htmlString + "</div>";
       }
-      htmlString = htmlString + "</table>";
+      htmlString = htmlString + "</div>";
       this.boardElement.innerHTML = htmlString;
     } else {
       let headerElement = document.getElementById("headerElement");
@@ -157,17 +155,18 @@ class TicView {
       }
       headerElement.innerHTML = htmlString;
     }
-    this.ticCellButtons = this.boardElement.querySelectorAll(this.elementType);
-
+    //this.ticCellButtons = this.boardElement.querySelectorAll('class^=col');
+    //this.ticCellButtons = this.boardElement.querySelectorAll(this.elementType);
+    this.ticCellButtons = this.boardElement.getElementsByClassName("col s2");
     setTimeout(function() {
       controller.ticModel.checkWinCon();
     }, 30);
-    //controller.ticModel.checkWinCon();
   }
 
   move() {
     clearInterval(this.barInterval);
     let elem = document.getElementById("progressBar");
+    //let elem = document.getElementsByClassName("progress");
     let width = 0;
     this.barInterval = setInterval(frame, 100);
     function frame() {
@@ -206,21 +205,23 @@ class TicController {
     }
     this.ticView.render(this.ticModel, renderAll);
     this.ticView.move();
-    //this.ticModel.checkWinCon();
-    //alert("Starting a new game");
-    //this.ticModel.ticArray = [...Array(5)].map(e => Array(5).fill(null));
-    //this.ticView.render(this.ticModel);
   }
   initListener() {
-    this.ticView.ticCellButtons = this.ticView.boardElement.querySelectorAll(
+    /* this.ticView.ticCellButtons = this.ticView.boardElement.querySelectorAll(
       this.ticView.elementType
+    ); */
+    this.ticView.ticCellButtons = this.ticView.boardElement.getElementsByClassName(
+      "col s2"
     );
+
     document.addEventListener("click", function(event) {
+      //console.log("click on: " + event.target.innerHTML);
       for (let i = 0; i < controller.ticView.ticCellButtons.length; i++) {
+        console.log(i);
         if (event.target.isSameNode(controller.ticView.ticCellButtons[i])) {
-          if (controller.ticView.ticCellButtons[i].innerHTML === "") {
+          if (controller.ticView.ticCellButtons[i].innerHTML === " - ") {
             controller.ticView.lastButtonIndex = i;
-            //console.log(i + " to be updated");
+            console.log(i + " to be updated");
             controller.updateView();
             break;
           }
