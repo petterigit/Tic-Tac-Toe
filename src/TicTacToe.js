@@ -119,6 +119,7 @@ class TicView {
 
     if (renderAll) {
       htmlString = htmlString + '<h1 id="headerElement"> Next in line: ';
+      console.log("Next in line: " + modelTurn + " (1=x)");
       if (modelTurn === 1) {
         htmlString = htmlString + "x </h1>";
       } else if (modelTurn === 0) {
@@ -172,7 +173,6 @@ class TicView {
     function frame() {
       if (width >= 100) {
         controller.updateView(false);
-        return true;
       } else {
         width++;
         elem.style.width = width + "%";
