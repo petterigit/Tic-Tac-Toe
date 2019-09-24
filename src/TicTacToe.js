@@ -119,7 +119,7 @@ class TicView {
 
     if (renderAll) {
       htmlString = htmlString + '<h1 id="headerElement"> Next in line: ';
-      console.log("Next in line: " + modelTurn + " (1=x)");
+      //console.log("Next in line: " + modelTurn + " (1=x)");
       if (modelTurn === 1) {
         htmlString = htmlString + "x </h1>";
       } else if (modelTurn === 0) {
@@ -217,11 +217,11 @@ class TicController {
     document.addEventListener("click", function(event) {
       //console.log("click on: " + event.target.innerHTML);
       for (let i = 0; i < controller.ticView.ticCellButtons.length; i++) {
-        console.log(i);
+        //console.log(i);
         if (event.target.isSameNode(controller.ticView.ticCellButtons[i])) {
           if (controller.ticView.ticCellButtons[i].innerHTML === " - ") {
             controller.ticView.lastButtonIndex = i;
-            console.log(i + " to be updated");
+            //console.log(i + " to be updated");
             controller.updateView();
             break;
           }
